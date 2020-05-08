@@ -35,7 +35,8 @@ public class RotationController : MonoBehaviour
     void Update()
     {
       // Debug.Log("horizontal axis: " + Input.GetAxis("Horizontal"));
-      Debug.Log("rb velocity: " + rb.velocity);
+      // Debug.Log("rb velocity: " + rb.velocity);
+      Debug.Log("local euler y:" + transform.localEulerAngles.y);
 
       // Braking
       if (Input.GetAxis("Vertical") < 0){
@@ -55,10 +56,13 @@ public class RotationController : MonoBehaviour
         transform.localEulerAngles = new Vector3(0, clampedRotation, (clampedRotation / 5) * Input.GetAxis("Horizontal") * -1);
       }
       // Return to center on no input
-      else if(transform.localEulerAngles.y <= 89.5 || transform.localEulerAngles.y >= 90.5) {
+      else if(transform.localEulerAngles.y <= 88 || transform.localEulerAngles.y >= 92) {
         float return_center = Mathf.Sign(transform.localEulerAngles.y - 90) * centerSpeed;
         float rotation = transform.localEulerAngles.y - return_center;
         transform.localEulerAngles = new Vector3(0, rotation, 0);
+      }
+      else{
+        transform.localEulerAngles = new Vector3(0, 90, 0);
       }
 
       rb.velocity = transform.forward * currentSpeed;
